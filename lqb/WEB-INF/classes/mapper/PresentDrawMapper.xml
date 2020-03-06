@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--namespace 路径 指向dao层接口-->
+<mapper namespace="com.example.lqb.dao.PresentDrawMapper">
+    <sql id="Base_Column_List">
+        draw_id, present_name, present_img, num, status, create_time, sort, max_num
+    </sql>
+    <resultMap id="PresentDrawMap" type="com.example.lqb.model.PresentDraw">
+        <id column="draw_id" property="drawId"/>
+        <result column="present_name" property="presentName"/>
+        <result column="present_img" property="presentImg"/>
+        <result column="num" property="num"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="sort" property="sort"/>
+        <result column="max_num" property="maxNum"/>
+    </resultMap>
+    <!--查询表数据-->
+    <select id="getRaffleGifts" resultMap="PresentDrawMap">
+        select * from  gw_present_draw
+    </select>
+</mapper>

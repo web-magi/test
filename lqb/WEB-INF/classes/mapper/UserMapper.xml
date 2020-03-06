@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--namespace 路径 指向dao层接口-->
+<mapper namespace="com.example.lqb.dao.UserMapper">
+    <sql id="Base_Column_List">
+       u_id, u_name, phone, pass, grade, amount, present, sex, head_img, address, create_time, money,unionid, withdraw
+    </sql>
+    <resultMap id="userMap" type="com.example.lqb.model.User">
+        <id column="u_id" property="uId"/>
+        <result column="u_name" property="uName"/>
+        <result column="phone" property="phone"/>
+        <result column="pass" property="pass"/>
+        <result column="grade" property="grade"/>
+        <result column="amount" property="amount"/>
+        <result column="present" property="present"/>
+        <result column="sex" property="sex"/>
+        <result column="head_img" property="headImg"/>
+        <result column="address" property="address"/>
+        <result column="create_time" property="createTime"/>
+        <result column="money" property="money"/>
+        <result column="unionid" property="unionid"/>
+        <result column="withdraw" property="withdraw"/>
+    </resultMap>
+    <!--登录-->
+    <!--验证账号是否存在-->
+    <select id="login" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select * from gw_user where phone=#{user}
+    </select>
+    <!--验证密码是否正确-->
+    <select id="loginPass" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select pass=#{pas} from gw_user where phone=#{user}
+    </select>
+    <!--注册存储数据-->
+    <insert id="saveUser" parameterType="java.lang.String">
+        insert into gw_user(phone,pass,create_time) values (#{phone}, #{pass},#{format})
+    </insert>
+    <!--判断手机号是否存在-->
+    <select id="getPhone" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select * from gw_user where phone=#{phone}
+    </select>
+    <!--通过手机号获取用户信息-->
+    <select id="getUserPhone" parameterType="java.lang.String" resultMap="userMap">
+        select * from gw_user where phone=#{phone}
+    </select>
+    <!--修改用户名称-->
+    <update id="modifyName" parameterType="java.lang.String">
+        update gw_user set u_name=#{newName} where phone=#{phone}
+    </update>
+    <!--修改用户性别-->
+    <update id="modifySex">
+        update gw_user set sex=#{i} where phone=#{phone}
+    </update>
+    <!--修改用户地址-->
+    <update id="modifyAddress" parameterType="java.lang.String">
+        update gw_user set address=#{address} where phone=#{phone}
+    </update>
+    <!--修改用户头像-->
+    <update id="modifyHeadImg" parameterType="java.lang.String">
+        update gw_user set head_img=#{headImg} where phone=#{phone}
+    </update>
+    <!--修改用户手机号-->
+    <update id="modifyPhone" parameterType="java.lang.String">
+        update gw_user set phone=#{phone} where u_name=#{uName}
+    </update>
+    <!--修改用户密码-->
+    <update id="modifyPass" parameterType="java.lang.String">
+        update gw_user set pass=#{pass} where phone=#{phone}
+    </update>
+    <!--计算表共几条数据-->
+    <select id="getNum" resultType="java.lang.Integer">
+        select count(*) from gw_user
+    </select>
+    <!--储存用户信息-->
+    <insert id="saveWeiXin" parameterType="java.lang.String">
+        insert into gw_user(u_name, phone, head_img,unionid,create_time)
+        values (#{uName},#{phone},#{headImg},#{unionid},#{format})
+    </insert>
+    <!--减少积分-->
+    <update id="deductIntegral" parameterType="java.lang.String">
+        update gw_user set present=#{valueOf} where phone=#{phone}
+    </update>
+    <!--抽奖中-增加积分-->
+    <update id="deductIntegralOne" parameterType="java.lang.String">
+        update gw_user set present=#{valueOf} where phone=#{phone1}
+    </update>
+    <!--抽奖中-体现金额增加-->
+    <update id="withdrawalAmount">
+        update gw_user set withdraw=#{withdraw} where phone=#{phone1}
+    </update>
+</mapper>

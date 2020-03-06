@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--namespace 路径 指向dao层接口-->
+<mapper namespace="com.example.lqb.dao.PresentActivityMapper">
+    <sql id="Base_Column_List">
+        activity_id, activity_name, activity_img,status, sort, create_time
+    </sql>
+    <!--type指向model-->
+    <resultMap id="PresentActivityMap" type="com.example.lqb.model.PresentActivity">
+        <id column="activity_id" property="activityId"/>
+        <result column="activity_name" property="activityName"/>
+        <result column="activity_img" property="activityImg"/>
+        <result column="status" property="status"/>
+        <result column="sort" property="sort"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+    <!--查询表全部数据-->
+    <select id="getGift" resultMap="PresentActivityMap">
+        select * from gw_present_activity
+    </select>
+</mapper>

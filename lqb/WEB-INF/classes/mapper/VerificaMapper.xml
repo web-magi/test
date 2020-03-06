@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--namespace 路径 指向dao层接口-->
+<mapper namespace="com.example.lqb.dao.VerificaMapper">
+    <sql id="Base_Column_List">
+        verifica_id, phone, num, time
+    </sql>
+    <resultMap id="verificaMap" type="com.example.lqb.model.Verifica">
+        <id column="verifica_id" property="verificaId"/>
+        <result column="phone" property="phone"/>
+        <result column="num" property="num"/>
+        <result column="time" property="time"/>
+    </resultMap>
+    <!--插入数据-->
+    <insert id="putVerifica">
+        insert into gw_verifica(phone, num, time) values (#{phone}, #{num}, #{time})
+   </insert>
+    <!--通过手机号查询数据-->
+    <select id="getVerifica" parameterType="java.lang.String" resultMap="verificaMap">
+        select * from gw_verifica where phone=#{phone}
+    </select>
+    <!--通过手机号删除数据-->
+    <delete id="deleteVerifica" parameterType="java.lang.String">
+        delete from gw_verifica where phone=#{phone}
+    </delete>
+</mapper>
